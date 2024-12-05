@@ -10,7 +10,7 @@
 }
 
 #app .container {
-  width: 376px;
+  width: 376px; 
   height: 666px;
   z-index: 100;
 
@@ -31,6 +31,13 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+button.archive-all, button.unarchive-all {
+  margin-bottom: 15px;
+  width: 100%;
+  font-size: 1.1em;
+  padding: 10px;
 }
 
 button:hover {
@@ -101,7 +108,6 @@ header {
   font-size: 0.9em;
 }
 
-
 /* Styles for Archive All and Unarchive All buttons */
 button.archive-all, button.unarchive-all {
   margin-bottom: 15px;
@@ -122,14 +128,66 @@ li {
   background-color: #f9f9f9;
 }
 
-/* Ensure the body CSS is clean */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 0;
+/* Styles for the tab buttons */
+.tabs {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tabs button.active {
+  background-color: #0056b3;
+  font-weight: bold;
+}
+
+.tabs button:hover {
+  background-color: #0056b3;
+}
+
+/* Style for Activity Details */
+.activity-details {
+  padding: 20px;
+}
+
+.details {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.details p {
+  margin: 5px 0;
+}
+
+button.back-button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.back-button:hover {
+  background-color: #0056b3;
+}
+
+.activity-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.activity-link:hover {
+  text-decoration: underline;
 }

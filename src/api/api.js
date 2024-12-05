@@ -15,25 +15,27 @@ export const archiveCall = async (id, isArchived) => {
     body: JSON.stringify({ is_archived: isArchived }),
   });
 
+  const contentType = response.headers.get('Content-Type');
+  const responseData = contentType?.includes('application/json')
+    ? await response.json()
+    : await response.text();
+
   if (!response.ok) {
-    throw new Error(`Failed to update call. Status: ${response.status}`);
+    console.error('API Error:', responseData);
+    throw new Error('Failed to archive/unarchive call');
   }
-
-  const text = await response.text(); // Get the raw response text
-  console.log('Raw response:', text); // Log the raw response for debugging
-
-  try {
-    const data = JSON.parse(text); // Try parsing the response as JSON
-    return data;
-  } catch (error) {
-    console.error('Error parsing JSON:', error);
-    console.log('Response text:', text); // Log the response for debugging
-    throw new Error('Failed to parse response as JSON');
-  }
+  return responseData;
 };
 
-// Reset all activities (calls) to initial state
+// Reset all activities (calls) to the initial state
 export const resetActivities = async () => {
   const response = await fetch(`${BASE_URL}/reset`, { method: 'PATCH' });
   if (!response.ok) throw new Error('Failed to reset activities');
+};
+
+
+// Fetch a single activity by ID
+export const fetchActivityDetails = async (id) => {
+  const response = await fetch(`${BASE_URL}/activities/${id}`);
+  return handleResponse(response);
 };
