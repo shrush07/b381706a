@@ -60,12 +60,11 @@ li {
 }
 
 /* Filter */
-.activity-feed {
-  margin-top: 20px;
+.activity-feed, .archived-tab {
+  margin-top: 10px;
 }
 
 .filter-buttons {
-  margin-bottom: 10px;
   display: flex;
   gap: 5px;
 }
@@ -154,14 +153,20 @@ p.call-from{
   background: #f9f9f9;
   border-radius: 3px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;  
+  position: relative;
 }
 
 /* View area inside the container */
 .container-view {
   padding: 20px;
   overflow-y: auto;
-  height: auto;
+  flex-grow: 1;  
+  min-height: 0; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Call list container */

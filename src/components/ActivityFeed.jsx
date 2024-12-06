@@ -2,13 +2,17 @@ import React from 'react';
 import { RiInboxArchiveFill } from "react-icons/ri";
 
 const ActivityFeed = ({ calls, archiveCall, archiveAll }) => {
-  return ( 
+  return (
     <div className="activity-feed">
       <button onClick={archiveAll}><RiInboxArchiveFill /> Archive All</button>
       {calls.map((call) => (
-        <div key={call.id} className="call">
+        <div
+          key={call.id}
+          className="call"
+          style={{ backgroundColor: call.bgColor }} // Apply background color here
+        >
           <div className="call-info">
-            <p className="call-from"> {call.from}</p>
+            <p className="call-from">{call.from}</p>
             <p className="call-to">{call.to || "Unknown"}</p>
             <p className="call-type">{call.call_type}</p>
             <p className="call-duration">{call.duration}s</p>
@@ -16,7 +20,8 @@ const ActivityFeed = ({ calls, archiveCall, archiveAll }) => {
               {new Date(call.created_at).toLocaleString()}
             </p>
           </div>
-          <button onClick={() => archiveCall(call.id)}><RiInboxArchiveFill />
+          <button onClick={() => archiveCall(call.id)}>
+            <RiInboxArchiveFill />
           </button>
         </div>
       ))}

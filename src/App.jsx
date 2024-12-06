@@ -9,6 +9,7 @@ import { MdCall } from "react-icons/md";
 import { MdPhoneInTalk } from "react-icons/md";
 import { MdPhoneMissed } from "react-icons/md";
 import { FaVoicemail } from "react-icons/fa6";
+import { RiResetRightFill } from "react-icons/ri";
 
 const App = () => {
   const [calls, setCalls] = useState([]);
@@ -71,6 +72,40 @@ const App = () => {
   const archiveAll = () => toggleArchiveStatus(true);
   const unarchiveAll = () => toggleArchiveStatus(false);
 
+  const resetCalls = () => {
+    if (activeTab === 'archived') {
+      const callsToReset = calls.filter((call) => call.is_archived);
+      const newCallsState = calls.map((call) =>
+        callsToReset.some((resetCall) => resetCall.id === call.id)
+          ? { ...call, is_archived: false }
+          : call
+      );
+      setCalls(newCallsState);
+    } else if (activeTab === 'unarchived') {
+      const callsToReset = calls.filter((call) => call.is_archived);
+      const newCallsState = calls.map((call) =>
+        callsToReset.some((resetCall) => resetCall.id === call.id)
+          ? { ...call, is_archived: false }
+          : call
+      );
+      setCalls(newCallsState);
+    }
+  };
+
+  // Function to determine the background color based on call type
+  const getCallBackgroundColor = (callType) => {
+    switch (callType) {
+      case 'answered':
+        return '#D4F7D4'; // Light green
+      case 'missed':
+        return '#F7D4D4'; // Light red
+      case 'voicemail':
+        return '#D4E7F7'; // Light blue
+      default:
+        return '#FFFFFF'; // Default (white) background for other types
+    }
+  };
+
   const filteredCalls = calls.filter((call) => {
     const matchesFilter = filter === 'all' || call.call_type === filter;
     const matchesTab = activeTab === 'unarchived' ? !call.is_archived : call.is_archived;
@@ -127,18 +162,31 @@ const App = () => {
           >
             <FaVoicemail />
           </button>
+          <button
+            className={filter === 'reset' ? 'active' : ''}
+            onClick={resetCalls}
+            data-tooltip="Reset calls"
+          >
+            <RiResetRightFill />
+          </button>
         </div>
 
         {activeTab === 'unarchived' && (
           <ActivityFeed
-            calls={filteredCalls}
+            calls={filteredCalls.map((call) => ({
+              ...call,
+              bgColor: getCallBackgroundColor(call.call_type), // Add bgColor property
+            }))}
             archiveCall={(id) => handleArchive(id, true)}
             archiveAll={archiveAll}
           />
         )}
         {activeTab === 'archived' && (
           <ArchiveTab
-            calls={filteredCalls}
+            calls={filteredCalls.map((call) => ({
+              ...call,
+              bgColor: getCallBackgroundColor(call.call_type), // Add bgColor property
+            }))}
             archiveCall={(id) => handleArchive(id, false)}
             unarchiveAll={unarchiveAll}
           />
