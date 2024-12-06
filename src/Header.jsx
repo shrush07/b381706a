@@ -12,7 +12,7 @@ const Header = () => {
           </svg>
         </div>
         <div>
-          <h1 className='header-text'>CallNest</h1>
+          <h1 className='header-text'>AirCell</h1>
         </div>
       </div>
     </header>

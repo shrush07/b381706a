@@ -1,6 +1,19 @@
 import React from 'react';
 import { RiInboxArchiveFill, RiInboxUnarchiveFill } from "react-icons/ri";
 
+const formatCallType = (callType) => {
+  switch (callType) {
+    case 'answered':
+      return 'Answered';
+    case 'missed':
+      return 'Missed';
+    case 'voicemail':
+      return 'Voicemail';
+    default:
+      return callType;
+  }
+};
+
 const ActivityFeed = ({ calls, archiveCall, archiveAll }) => {
   return (
     <div className="activity-feed">
@@ -24,13 +37,15 @@ const ActivityFeed = ({ calls, archiveCall, archiveAll }) => {
             <div className="call-info">
               {/* Left Side: To, From, Type */}
               <div className="call-left">
-                <p> {call.to || "Unknown"}</p>
-                <p> {call.from || "Unknown"}</p>
-                <p><span
+                <p>{call.to || "Unknown"}</p>
+                <p>{call.from || "Unknown"}</p>
+                <p>
+                  <span
                     className={`call-type ${call.call_type === "missed" ? "missed-call" : ""}`}
                   >
-                    {call.call_type}
-                  </span></p>
+                    {formatCallType(call.call_type)}
+                  </span>
+                </p>
               </div>
 
               {/* Right Side: Date, Duration, Time, Archive/Unarchive */}

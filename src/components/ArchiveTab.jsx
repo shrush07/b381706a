@@ -1,6 +1,19 @@
 import React from 'react';
 import { RiInboxUnarchiveFill } from "react-icons/ri";
 
+const formatCallType = (callType) => {
+  switch (callType) {
+    case 'answered':
+      return 'Answered';
+    case 'missed':
+      return 'Missed';
+    case 'voicemail':
+      return 'Voicemail';
+    default:
+      return callType;
+  }
+};
+
 const ArchivedTab = ({ calls, archiveCall, unarchiveAll }) => {
   return (
     <div className="archived-tab">
@@ -20,6 +33,7 @@ const ArchivedTab = ({ calls, archiveCall, unarchiveAll }) => {
         });
 
         return (
+          <div key={call.id} className="call">
           <div className="call-info">
               {/* Left Side: To, From, Type */}
               <div className="call-left">
@@ -28,7 +42,7 @@ const ArchivedTab = ({ calls, archiveCall, unarchiveAll }) => {
                 <p><span
                     className={`call-type ${call.call_type === "missed" ? "missed-call" : ""}`}
                   >
-                    {call.call_type}
+                    {formatCallType(call.call_type)}
                   </span></p>
               </div>
 
@@ -48,6 +62,7 @@ const ArchivedTab = ({ calls, archiveCall, unarchiveAll }) => {
                 </button>
               </div>
             </div>
+          </div>
         );
       })}
     </div>

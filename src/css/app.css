@@ -93,6 +93,12 @@ p.call-from{
   font-size: 14px;
 }
 
+.call-type {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+
 .filter-buttons button[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -150,7 +156,7 @@ p.call-from{
   overflow-y: auto;
   overflow-x: hidden;
   height: 370px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .activity-feed h2, .archived-tab h2 {
@@ -175,7 +181,7 @@ p.call-from{
 
 .call p {
   margin: 0;
-  font-size: 0.9em;
+  font-size: 12px;
 }
 .call-info {
   display: flex;
@@ -357,27 +363,3 @@ button.back-button:hover {
   text-decoration: underline;
 }
 
-/* General styling for the scrollbar */
-.container-view::-webkit-scrollbar {
-  height: 6px; /* Set scrollbar height */
-  background-color: #f1f1f1; /* Background color of the track */
-}
-
-.container-view::-webkit-scrollbar-thumb {
-  background-color: #b1b1b1; /* Scrollbar thumb color */
-  border-radius: 10px; /* Rounded scrollbar edges */
-}
-
-.container-view::-webkit-scrollbar-thumb:hover {
-  background-color: #888; /* Thumb color on hover */
-}
-
-.container-view::-webkit-scrollbar-track {
-  background-color: #f9f9f9; /* Scrollbar track color */
-}
-
-/* For Firefox */
-.container-view {
-  scrollbar-width: thin; /* Makes the scrollbar thin */
-  scrollbar-color: #b1b1b1 #f9f9f9; /* Thumb color and track color */
-}
