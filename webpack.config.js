@@ -1,6 +1,13 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
+  mode: 'production',
+  entry: './src/index.js', // Ensure this points to your main entry point
+  output: {
+    path: path.resolve(__dirname, 'build'), // Specify the build directory
+    filename: 'bundle.js', // Name of the generated bundle file
+  },
   module: {
     rules: [
       {
@@ -14,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(js|jsx)$/,
@@ -30,8 +37,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html"
+      template: "./public/index.html", // Path to your HTML template
+      filename: "index.html" // Output filename for HTML file
     })
   ]
 };
