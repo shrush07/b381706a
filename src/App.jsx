@@ -10,14 +10,12 @@ import { MdPhoneInTalk } from "react-icons/md";
 import { MdPhoneMissed } from "react-icons/md";
 import { FaVoicemail } from "react-icons/fa6";
 
-
-
-
 const App = () => {
   const [calls, setCalls] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('unarchived'); 
-  const [filter, setFilter] = useState("all");
+  const [activeTab, setActiveTab] = useState('unarchived');
+  const [filter, setFilter] = useState('all');
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -36,8 +34,8 @@ const App = () => {
   const handleArchive = async (id, isArchived) => {
     try {
       await archiveCall(id, isArchived);
-      setCalls(prevCalls =>
-        prevCalls.map(call =>
+      setCalls((prevCalls) =>
+        prevCalls.map((call) =>
           call.id === id ? { ...call, is_archived: isArchived } : call
         )
       );
@@ -50,38 +48,36 @@ const App = () => {
     setFilter(newFilter);
   };
 
-  const filteredCalls =
-    filter === "all"
-      ? calls
-      : calls.filter((call) => call.call_type === filter);
-
-  const archiveAll = async () => {
-    await toggleArchiveStatus(true);
-  };
-
-  const unarchiveAll = async () => {
-    await toggleArchiveStatus(false);
-  };
-
   const toggleArchiveStatus = async (isArchived) => {
     try {
-      await Promise.all(
-        calls
-          .filter(call => call.is_archived !== isArchived)
-          .map(call => archiveCall(call.id, isArchived))
+      const filteredForToggle = calls.filter(
+        (call) => (activeTab === 'unarchived' ? !call.is_archived : call.is_archived)
       );
-      setCalls(prevCalls =>
-        prevCalls.map(call => ({ ...call, is_archived: isArchived }))
+      await Promise.all(
+        filteredForToggle.map((call) => archiveCall(call.id, isArchived))
+      );
+      setCalls((prevCalls) =>
+        prevCalls.map((call) =>
+          filteredForToggle.some((toggleCall) => toggleCall.id === call.id)
+            ? { ...call, is_archived: isArchived }
+            : call
+        )
       );
     } catch (error) {
       console.error('Error updating archive status:', error);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  const archiveAll = () => toggleArchiveStatus(true);
+  const unarchiveAll = () => toggleArchiveStatus(false);
 
-  const activeCalls = calls.filter(call => !call.is_archived);
-  const archivedCalls = calls.filter(call => call.is_archived);
+  const filteredCalls = calls.filter((call) => {
+    const matchesFilter = filter === 'all' || call.call_type === filter;
+    const matchesTab = activeTab === 'unarchived' ? !call.is_archived : call.is_archived;
+    return matchesFilter && matchesTab;
+  });
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="container">
@@ -101,53 +97,52 @@ const App = () => {
             <RiInboxArchiveFill /> Archived Calls
           </button>
         </div>
-        
+
         <div className="filter-buttons">
           <button
-            className={filter === "all" ? "active" : ""}
-            onClick={() => handleFilterChange("all")}
+            className={filter === 'all' ? 'active' : ''}
+            onClick={() => handleFilterChange('all')}
             data-tooltip="View all calls"
           >
             <MdCall />
           </button>
           <button
-            className={filter === "answered" ? "active" : ""}
-            onClick={() => handleFilterChange("answered")}
+            className={filter === 'answered' ? 'active' : ''}
+            onClick={() => handleFilterChange('answered')}
             data-tooltip="View answered calls"
           >
             <MdPhoneInTalk />
           </button>
           <button
-            className={filter === "missed" ? "active" : ""}
-            onClick={() => handleFilterChange("missed")}
+            className={filter === 'missed' ? 'active' : ''}
+            onClick={() => handleFilterChange('missed')}
             data-tooltip="View missed calls"
           >
             <MdPhoneMissed />
           </button>
           <button
-            className={filter === "voicemail" ? "active" : ""}
-            onClick={() => handleFilterChange("voicemail")}
+            className={filter === 'voicemail' ? 'active' : ''}
+            onClick={() => handleFilterChange('voicemail')}
             data-tooltip="View voicemail calls"
           >
             <FaVoicemail />
           </button>
-
         </div>
+
         {activeTab === 'unarchived' && (
           <ActivityFeed
-            calls={activeCalls}
-            archiveCall={id => handleArchive(id, true)}
+            calls={filteredCalls}
+            archiveCall={(id) => handleArchive(id, true)}
             archiveAll={archiveAll}
           />
         )}
         {activeTab === 'archived' && (
           <ArchiveTab
-            calls={archivedCalls}
-            archiveCall={id => handleArchive(id, false)}
+            calls={filteredCalls}
+            archiveCall={(id) => handleArchive(id, false)}
             unarchiveAll={unarchiveAll}
           />
         )}
-        
       </div>
       <Footer />
     </div>

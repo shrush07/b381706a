@@ -168,7 +168,7 @@ p.call-from{
 .activity-feed, .archived-tab {
   margin-bottom: 20px;
   overflow-y: auto;
-  max-height: 370px;
+  height: 370px;
 }
 
 .activity-feed h2, .archived-tab h2 {
