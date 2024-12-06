@@ -20,27 +20,34 @@ const ArchivedTab = ({ calls, archiveCall, unarchiveAll }) => {
         });
 
         return (
-          <div key={call.id} className="call">
-            <div className="call-info">
-              {/* Left Side: Date, Duration, Time */}
+          <div className="call-info">
+              {/* Left Side: To, From, Type */}
               <div className="call-left">
-                <p className="call-date">{formattedDate}</p>
-                <p className="call-duration-time">
-                  {formattedDuration} | {formattedTime}
-                </p>
+                <p> {call.to || "Unknown"}</p>
+                <p> {call.from || "Unknown"}</p>
+                <p><span
+                    className={`call-type ${call.call_type === "missed" ? "missed-call" : ""}`}
+                  >
+                    {call.call_type}
+                  </span></p>
               </div>
 
-              {/* Right Side: Unarchive Button */}
+              {/* Right Side: Date, Duration, Time, Archive/Unarchive */}
               <div className="call-right">
+                <div className="call-details">
+                  <span className="call-date">{formattedDate}</span>
+                  <span className="call-duration-time">
+                    {formattedDuration} | {formattedTime}
+                  </span>
+                </div>
                 <button
                   className="unarchive-btn"
                   onClick={() => archiveCall(call.id)}
                 >
-                  <RiInboxUnarchiveFill />
+                  {call.is_archived ? <RiInboxUnarchiveFill /> : <RiInboxArchiveFill />}
                 </button>
               </div>
             </div>
-          </div>
         );
       })}
     </div>
