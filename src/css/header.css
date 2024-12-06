@@ -1,12 +1,20 @@
-header {
+.header {
   height: 30px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 10px;
   text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
-
-header svg {
+.logo {
   display: block;
-  width: 30%; height: 100%;
+}
+
+.header-text{
+  font-size: 14px;
 }

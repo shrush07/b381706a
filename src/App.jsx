@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 import ActivityFeed from './components/ActivityFeed.jsx';
 import ArchiveTab from './components/ArchiveTab.jsx';
 import { fetchActivities, archiveCall } from './api/api.js';
+import { RiInboxArchiveFill, RiInboxUnarchiveFill } from "react-icons/ri";
+import { MdCall } from "react-icons/md";
+import { MdPhoneInTalk } from "react-icons/md";
+import { MdPhoneMissed } from "react-icons/md";
+import { FaVoicemail } from "react-icons/fa6";
+
+
+
 
 const App = () => {
   const [calls, setCalls] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('unarchived');
-
+  const [activeTab, setActiveTab] = useState('unarchived'); 
+  const [filter, setFilter] = useState("all");
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -36,6 +45,15 @@ const App = () => {
       console.error('Error archiving/unarchiving call:', error);
     }
   };
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+  const filteredCalls =
+    filter === "all"
+      ? calls
+      : calls.filter((call) => call.call_type === filter);
 
   const archiveAll = async () => {
     await toggleArchiveStatus(true);
@@ -69,22 +87,52 @@ const App = () => {
     <div className="container">
       <Header />
       <div className="container-view">
-        <h1>Activity Feed</h1>
         <div className="tabs">
           <button
             onClick={() => setActiveTab('unarchived')}
             className={activeTab === 'unarchived' ? 'active' : ''}
           >
-            Unarchived Calls
+            <RiInboxUnarchiveFill /> Unarchived Calls
           </button>
           <button
             onClick={() => setActiveTab('archived')}
             className={activeTab === 'archived' ? 'active' : ''}
           >
-            Archived Calls
+            <RiInboxArchiveFill /> Archived Calls
           </button>
         </div>
+        
+        <div className="filter-buttons">
+          <button
+            className={filter === "all" ? "active" : ""}
+            onClick={() => handleFilterChange("all")}
+            data-tooltip="View all calls"
+          >
+            <MdCall />
+          </button>
+          <button
+            className={filter === "answered" ? "active" : ""}
+            onClick={() => handleFilterChange("answered")}
+            data-tooltip="View answered calls"
+          >
+            <MdPhoneInTalk />
+          </button>
+          <button
+            className={filter === "missed" ? "active" : ""}
+            onClick={() => handleFilterChange("missed")}
+            data-tooltip="View missed calls"
+          >
+            <MdPhoneMissed />
+          </button>
+          <button
+            className={filter === "voicemail" ? "active" : ""}
+            onClick={() => handleFilterChange("voicemail")}
+            data-tooltip="View voicemail calls"
+          >
+            <FaVoicemail />
+          </button>
 
+        </div>
         {activeTab === 'unarchived' && (
           <ActivityFeed
             calls={activeCalls}
@@ -99,7 +147,9 @@ const App = () => {
             unarchiveAll={unarchiveAll}
           />
         )}
+        
       </div>
+      <Footer />
     </div>
   );
 };

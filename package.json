@@ -14,8 +14,10 @@
     "postinstall": "webpack --mode production"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-icons": "^5.4.0",
     "react-router-dom": "^7.0.2"
   },
   "devDependencies": {
@@ -33,7 +35,6 @@
     "webpack-dev-server": "^5.1.0"
   },
   "engines": {
-  "node": "20.18.1"
-}
-
+    "node": "20.18.1"
+  }
 }

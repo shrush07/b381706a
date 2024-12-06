@@ -6,7 +6,7 @@ export const fetchActivities = async () => {
   if (!response.ok) throw new Error('Failed to fetch activities');
   return response.json();
 };
-
+ 
 // Archive or unarchive a specific call
 export const archiveCall = async (id, isArchived) => {
   const response = await fetch(`${BASE_URL}/activities/${id}`, {
