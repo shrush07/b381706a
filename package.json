@@ -5,11 +5,13 @@
   "main": "index.js",
   "repository": "",
   "author": "",
-  "license": "",
+  "license": "MIT",
   "private": false,
+  "homepage": ".", 
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "postinstall": "webpack --mode production" 
   },
   "dependencies": {
     "react": "^16.14.0",
