@@ -33,7 +33,7 @@
     "webpack-dev-server": "^5.1.0"
   },
   "engines": {
-  "node": "20.1.1"
+  "node": "20.18.1"
 }
 
 }
