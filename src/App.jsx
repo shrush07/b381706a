@@ -40,6 +40,7 @@ const App = () => {
           call.id === id ? { ...call, is_archived: isArchived } : call
         )
       );
+      setActiveTab(isArchived ? 'archived' : 'unarchived');
     } catch (error) {
       console.error('Error archiving/unarchiving call:', error);
     }
@@ -96,13 +97,13 @@ const App = () => {
   const getCallBackgroundColor = (callType) => {
     switch (callType) {
       case 'answered':
-        return '#D4F7D4'; // Light green
+        return '#D4F7D4';
       case 'missed':
-        return '#F7D4D4'; // Light red
+        return '#F7D4D4';
       case 'voicemail':
-        return '#D4E7F7'; // Light blue
+        return '#D4E7F7'; 
       default:
-        return '#FFFFFF'; // Default (white) background for other types
+        return '#FFFFFF'; 
     }
   };
 
@@ -175,7 +176,7 @@ const App = () => {
           <ActivityFeed
             calls={filteredCalls.map((call) => ({
               ...call,
-              bgColor: getCallBackgroundColor(call.call_type), // Add bgColor property
+              bgColor: getCallBackgroundColor(call.call_type),
             }))}
             archiveCall={(id) => handleArchive(id, true)}
             archiveAll={archiveAll}

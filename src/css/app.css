@@ -9,20 +9,6 @@
   bottom: 0;
 } 
 
-#app .container {
-  width: 376px; 
-  height: 666px;
-  z-index: 100;
-
-  background: white;
-  border-radius: 3px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .9);
-}
-
-#app .container-view {
-  padding: 20px;
-}
-
 button {
   margin: 5px;
   padding: 5px 10px;
@@ -40,6 +26,7 @@ button.archive-all, button.unarchive-all {
   width: 100%;
   font-size: 1.1em;
   padding: 10px;
+  margin: 0;
 }
 
 button:hover {
@@ -60,13 +47,11 @@ li {
 }
 
 /* Filter */
-.activity-feed, .archived-tab {
-  margin-top: 10px;
-}
 
 .filter-buttons {
   display: flex;
   gap: 5px;
+  justify-content: center;
 }
 
 .filter-buttons button {
@@ -102,19 +87,6 @@ li {
 
 .call-info p {
   margin: 5px 0;
-}
-
-.archive-btn {
-  background-color: #1d1d1d;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.archive-btn:hover {
-  background-color: #2ac420;
 }
 
 p.call-from{
@@ -156,24 +128,29 @@ p.call-from{
   display: flex;
   flex-direction: column;  
   position: relative;
+  overflow-x: hidden;
 }
 
 /* View area inside the container */
 .container-view {
   padding: 20px;
+  overflow-x: auto;
   overflow-y: auto;
   flex-grow: 1;  
   min-height: 0; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 /* Call list container */
 .activity-feed, .archived-tab {
   margin-bottom: 20px;
   overflow-y: auto;
+  overflow-x: hidden;
   height: 370px;
+  margin-top: 10px;
 }
 
 .activity-feed h2, .archived-tab h2 {
@@ -185,50 +162,134 @@ p.call-from{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
+  margin-bottom: 15px;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f7f7f7;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%; 
+  box-sizing: border-box; 
+  overflow: hidden;
 }
 
 .call p {
   margin: 0;
   font-size: 0.9em;
 }
-/* Call list details */
-p.to {
-  font-size: 16px;
-}
-
-p.from{
-  font-size: 12px;
-}
-
-/* Styles for Archive All and Unarchive All buttons */
-button.archive-all, button.unarchive-all {
-  margin-bottom: 15px;
+.call-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  font-size: 1.1em;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.call-left, .call-right{
+  flex: 1;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-li {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
+
+.call-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.call-left .call-duration-time {
+  font-size: 12px;
+  color: #555;
+}
+
+.call-right .archive-btn, .call-right .unarchive-btn {
+  background-color: #1d1d1d;
+  color: white;
+  padding: 5px 10px;
+  border: none;
   border-radius: 4px;
-  background-color: #f9f9f9;
+  cursor: pointer;
+  flex-shrink: 0;
 }
+
+.call-right .archive-btn:hover, .call-right .unarchive-btn:hover {
+  background-color: #2ac420;
+}
+
+.call-left p.call-date {
+  font-weight: bold;
+}
+
+.call-left p.call-duration-time {
+  font-size: 14px;
+  color: #777;
+}
+
+.activity-feed {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.call-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.call-left {
+  flex: 1;
+  font-size: 14px;
+}
+
+.call-right {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+.call-details {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.call-details .call-date {
+  font-weight: bold;
+}
+
+.call-details .call-duration-time {
+  color: #777;
+}
+
+.archive-btn {
+  background-color: #1d1d1d;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.archive-btn:hover {
+  background-color: #2ac420;
+}
+
+.missed-call {
+  color: red;
+  font-weight: bold;
+}
+
 
 /* Styles for the tab buttons */
 .tabs {
   display: flex;
   margin-bottom: 10px;
+  justify-content: center;
 }
 
 .tabs button {
@@ -296,3 +357,27 @@ button.back-button:hover {
   text-decoration: underline;
 }
 
+/* General styling for the scrollbar */
+.container-view::-webkit-scrollbar {
+  height: 6px; /* Set scrollbar height */
+  background-color: #f1f1f1; /* Background color of the track */
+}
+
+.container-view::-webkit-scrollbar-thumb {
+  background-color: #b1b1b1; /* Scrollbar thumb color */
+  border-radius: 10px; /* Rounded scrollbar edges */
+}
+
+.container-view::-webkit-scrollbar-thumb:hover {
+  background-color: #888; /* Thumb color on hover */
+}
+
+.container-view::-webkit-scrollbar-track {
+  background-color: #f9f9f9; /* Scrollbar track color */
+}
+
+/* For Firefox */
+.container-view {
+  scrollbar-width: thin; /* Makes the scrollbar thin */
+  scrollbar-color: #b1b1b1 #f9f9f9; /* Thumb color and track color */
+}
